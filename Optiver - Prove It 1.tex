@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{mathtools}  % brings in amsmath, also some improvements
+\usepackage{amssymb} % brings in amsfonts, incl \square
+
+\title{Optiver: Prove It | Ep 1: A Chance Encounter}
+\author{Trung Nguyen}
+\date{August 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Today, we are going to solve Optiver's challenges from their new Prove It series which I have really enjoyed. I will just be providing the mathematical proofs, but if you are interested to see what these formulas and equations mean, please see this video for reference (problems are near the end): https://www.youtube.com/watch?v=fmtscKsfMTg 
+
+\section{Exercise 1}
+
+\subsection{Problem:}
+Prove that $$\lim_{n\to\infty} \frac{1}{2^{2n}}\sum_{i=0}^{n} {n\choose i}^2 =0.$$
+
+\subsection{Proof.} 
+We are going to first invoke $\textbf{Vandermonde's identity}$ which states $${\displaystyle \sum _{i=0}^{r}{m \choose i}{n \choose r-i}={m+n \choose r}}.$$ Setting $m=r=n$ we obtain $${\displaystyle \sum _{i=0}^{n}{n \choose i}{n \choose n-i}={n+n \choose n}}$$ but it is well-known that ${n \choose i}={n \choose n-i}$, so we really have $$\sum_{i=0}^{n} {n\choose i}^2={2n\choose n}.$$ This is very useful as it allows us to eliminate the summation in our original problem. We now have to just show \[\lim_{n\to\infty} \frac{1}{2^{2n}}{2n\choose n} =0.\]Note that \[{2n\choose n}= \frac{(2n)!}{(n!)^2}.\] For large values of \(n\), we can use Stirling's approximation:
+\[
+n! \approx \sqrt{2\pi n} \left(\frac{n}{e}\right)^n.
+\]Applying this to the factorials in the expression for \({2n\choose n}\), we have
+
+\[
+{2n\choose n} \approx \frac{\sqrt{4\pi n} \left(\frac{2n}{e}\right)^{2n}}{(2\pi n) \left(\frac{n}{e}\right)^{2n}} = \frac{4^n \sqrt{4\pi n}}{2\pi n} = \frac{4^n}{\sqrt{\pi n}}.
+\]
+Hence, 
+\[
+\frac{{2n\choose n}}{2^{2n}} \approx \frac{\frac{4^n}{\sqrt{\pi n}}}{4^n} = \frac{1}{\sqrt{\pi n}}.
+\]We just need to check
+\[
+\lim_{n \to \infty} \frac{1}{\sqrt{\pi n}} = \lim_{n \to \infty} \frac{1}{\sqrt{\pi n}} = 0
+\]
+which is trivial. Thus, we have shown that:
+\[
+\lim_{n\to \infty} \frac{{2n\choose n}}{2^{2n}} = 0. 
+\]
+$\square$
+
+\section{Exercise 2}
+
+\subsection{Problem:} Prove that $$\frac{1}{2^{2n}}\sum_{i=0}^{n} \binom{n}{i}^2 >\frac{1}{n}$$ for all $n\ge 4$ (this condition was not mentioned in the video, but it is necessary).
+
+\subsection{Proof.} As in the first exercise, we can eliminate the summation using combinatorial identities. So it remains to show that $$\frac{1}{2^{2n}}\binom{2n}{n} >\frac{1}{n}$$ for all $n\ge 4$. We will induct on $n$. The base case of $n=4$ holds as $\frac{1}{2^{2\cdot 4}}\binom{2\cdot 4}{4}=\frac{70}{256}>\frac{1}{4}$, so now assume the inequality holds for $n=k$. That is, assume $$\frac{1}{2^{2k}}\binom{2k}{k} >\frac{1}{k}.$$ We will show this holds for $n=k+1$ as well by proving
+\[
+\frac{1}{2^{2(k+1)}} \binom{2\cdot (k+1)}{k+1} > \frac{1}{k+1}.
+\]We will start by rewriting the expression for \(\binom{2\cdot(k+1)}{k+1}\) in terms of \(\binom{2k}{k}\). Observe \[
+\binom{2k+2}{k+1} = \frac{(2k+2)!}{(k+1)!(k+1)!} = \frac{(2k+2)(2k+1)(2k)!}{(k+1)(k+1)!(k!)^2} = \frac{2(2k+1)}{k+1} \cdot \frac{(2k)!}{k!k!} = \frac{2(2k+1)}{k+1} \binom{2k}{k}.
+\]
+Hence,
+\[
+\frac{1}{2^{2(k+1)}}\binom{2\cdot (k+1)}{k+1} = \frac{\frac{2(2k+1)}{k+1} \binom{2k}{k}}{2^{2} \cdot 2^{2k}} = \frac{2(2k+1)}{4(k+1)} \cdot \frac{\binom{2k}{k}}{2^{2k}} = \frac{(2k+1)}{2(k+1)} \cdot \frac{\binom{2k}{k}}{2^{2k}}.
+\]
+By the inductive hypothesis,
+\[
+\frac{\binom{2k}{k}}{2^{2k}} > \frac{1}{k},
+\]
+so
+\[
+\frac{(2k+1)}{2(k+1)} \cdot \frac{\binom{2k}{k}}{2^{2k}} > \frac{(2k+1)}{2(k+1)} \cdot \frac{1}{k}.
+\]
+But note we must have
+\[
+\frac{(2k+1)}{2(k+1)} \cdot \frac{1}{k} = \frac{2k+1}{2k(k+1)}> \frac{1}{k+1}.
+\]
+because we always have
+\[
+\frac{2k+1}{2k} > 1.
+\]
+Thus \[
+\frac{1}{2^{2(k+1)}} \binom{2\cdot (k+1)}{k+1} > \frac{(2k+1)}{2(k+1)} \cdot \frac{1}{k}> \frac{1}{k+1}
+\] which completes the induction. We have successfully shown
+\[
+\frac{\binom{2n}{n}}{2^{2n}} > \frac{1}{n}
+\] for all \(n \geq 4\). $\square$
+
+\end{document}
